@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root version="3.0">
+	<properties>
+		<name>5E Weighted Dice</name>
+		<version>beta_v2</version>		
+		<author>Gkjsdll</author>
+		<description>Manually enter d20 attack die roll</description>
+		<!-- <ruleset>
+			<name>5E</name>
+		</ruleset> -->
+	</properties>
+	
+	<announcement></announcement>
+
+	<base>
+		<script name="WeightedDiceCore" file="scripts/core.lua" />		
+		<script name="WeightedDiceAttack" file="scripts/attack.lua" />
+		<script name="WeightedDiceCheck" file="scripts/check.lua" />
+		<script name="WeightedDiceGeneral" file="scripts/general.lua" />
+		<script name="WeightedDiceSave" file="scripts/save.lua" />
+		<script name="WeightedDiceSkill" file="scripts/skill.lua" />
+
+		<!--New window where the GM can enter the attack roll result before rolling the attack-->
+		<windowclass name="weighteddice">
+			<frame>charsheethelper</frame>
+			<placement>
+				<size width="400" height="175" />
+			</placement>
+			<nodelete />
+			<playercontrol />
+			<sheetdata>
+				<windowtitlebar name="title">
+					 <static>Manual Die Roll Entry</static>
+				</windowtitlebar>
+				<anchor_title_charsheethelper name="contentanchor" />
+
+				<label name="label_die_result">
+					<anchored to="contentanchor" position="belowleft" offset="0,15" width="95" />
+					<static text="Pre-Mod d20 roll:" />
+				</label>
+	
+				<basicnumber name="weighted_die_roll">
+					<anchored to="label_die_result" position="righthigh" offset="10,0" width="50" height="20" />
+					<default>0</default>
+					<min>0</min>
+					<max>20</max>
+					<script>						
+						function onInit()
+							if super and super.onInit then
+								super.onInit();
+							end
+							
+							setFocus();
+						
+							self.setValue(WeightedDiceCore.WEIGHTED_ROLL);
+						
+							if not User.isHost() then
+								self.close();
+							end
+						end
+
+						function onValueChanged()
+								local nNextRollValue = self.getValue();
+
+								if (nNextRollValue > 20) then
+									nNextRollValue = self.getMaxValue();
+								end
+
+								if nNextRollValue >= 0 then
+									local msgOOB = {type="weighted_dice_set", next_roll_value=nNextRollValue};
+									Comm.deliverOOBMessage(msgOOB);
+								end
+							end
+					</script>
+				</basicnumber>
+				<label_fieldtop name="label_weighted_die_roll">
+					<anchored to="weighted_die_roll" />
+					<static text="d20 roll" />
+				</label_fieldtop>			
+				<close_charsheethelper />
+			</sheetdata>
+		</windowclass>	  			
+	</base>
+</root>
