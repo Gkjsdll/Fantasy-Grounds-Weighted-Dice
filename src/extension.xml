@@ -3,9 +3,9 @@
 <root version="3.0">
 	<properties>
 		<name>5E Weighted Dice</name>
-		<version>beta_v2</version>		
+		<version>beta_v1.0.2</version>
 		<author>Gkjsdll</author>
-		<description>Manually enter d20 attack die roll</description>
+		<description>Manually enter a result for the next d20 die roll made</description>
 		<!-- <ruleset>
 			<name>5E</name>
 		</ruleset> -->
