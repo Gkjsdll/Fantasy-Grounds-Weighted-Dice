@@ -20,7 +20,8 @@ function onConcentrationRoll(rSource, rTarget, rRoll)
 
 	local bAutoFail = rRoll.sDesc:match("%[AUTOFAIL%]");
 	if not bAutoFail and rRoll.nTarget then
-		notifyApplyConc(rSource, rMessage.secret, rRoll);
+		-- Was local reference
+		ActionSave.notifyApplyConc(rSource, rMessage.secret, rRoll);
 	end
 end
 
@@ -129,7 +130,8 @@ function onSave(rSource, rTarget, rRoll)
 
 	local bAutoFail = rRoll.sDesc:match("%[AUTOFAIL%]");
 	if not bAutoFail and rRoll.nTarget then
-		notifyApplySave(rSource, rRoll);
+		-- Was local reference
+		ActionSave.notifyApplySave(rSource, rRoll);
 	end
 end
 
@@ -141,6 +143,7 @@ function onSystemShockRoll(rSource, rTarget, rRoll)
     WeightedDiceCore.changeRoll(rRoll);
 
 	Comm.deliverChatMessage(rMessage);
-
-	notifyApplySystemShock(rSource, rMessage.secret, rRoll);
+	
+	-- Was local reference
+	ActionSave.notifyApplySystemShock(rSource, rMessage.secret, rRoll);
 end

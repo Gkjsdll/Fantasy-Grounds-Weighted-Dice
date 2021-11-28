@@ -60,12 +60,14 @@ function onAttack(rSource, rTarget, rRoll)
 	Comm.deliverChatMessage(rMessage);
 	
 	if rTarget then
-		notifyApplyAttack(rSource, rTarget, rRoll.bTower, rRoll.sType, rRoll.sDesc, rAction.nTotal, table.concat(rAction.aMessages, " "));
+		-- Was local reference
+		ActionAttack.notifyApplyAttack(rSource, rTarget, rRoll.bTower, rRoll.sType, rRoll.sDesc, rAction.nTotal, table.concat(rAction.aMessages, " "));
 	end
 	
 	-- TRACK CRITICAL STATE
 	if rAction.sResult == "crit" then
-		setCritState(rSource, rTarget);
+		-- Was local reference
+		ActionAttack.setCritState(rSource, rTarget);
 	end
 	
 	-- REMOVE TARGET ON MISS OPTION
@@ -80,9 +82,10 @@ function onAttack(rSource, rTarget, rRoll)
 	-- HANDLE FUMBLE/CRIT HOUSE RULES
 	local sOptionHRFC = OptionsManager.getOption("HRFC");
 	if rAction.sResult == "fumble" and ((sOptionHRFC == "both") or (sOptionHRFC == "fumble")) then
-		notifyApplyHRFC("Fumble");
+		-- Was local reference
+		ActionAttack.notifyApplyHRFC("Fumble");
 	end
 	if rAction.sResult == "crit" and ((sOptionHRFC == "both") or (sOptionHRFC == "criticalhit")) then
-		notifyApplyHRFC("Critical Hit");
+		ActionAttack.notifyApplyHRFC("Critical Hit");
 	end
 end
